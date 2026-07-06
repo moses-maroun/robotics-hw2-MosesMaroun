@@ -52,3 +52,19 @@ void Fleet::charge_all() const {
     }
 }
  
+Fleet& Fleet::operator+=(std::shared_ptr<Robot> robot) {
+    add(robot);
+    return *this;
+}
+ 
+Fleet& Fleet::operator-=(const std::string& id) {
+    remove(id);
+    return *this;
+}
+ 
+std::ostream& operator<<(std::ostream& os, const Fleet& f) {
+    for (const auto& [id, robot] : f.robots_) {
+        os << *robot << "\n";
+    }
+    return os;
+}

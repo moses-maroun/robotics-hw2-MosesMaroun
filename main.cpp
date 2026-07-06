@@ -25,16 +25,19 @@ int main() {
     int choice = -1;
     do{
         print_menu();
+        
         if (!(std::cin >> choice)) {
-            // guard clause: bad input (e.g. letters) doesn't crash the program
+            std::cout << "Error: Invalid input\n";
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "Error: invalid input.\n";
-            continue;
+            choice = -1;
         }
- 
+        // the previous commit had a problem while running, when an invalid input was given, the program would stop running afterwards.
+        // to solve it I added a check to see if the input is valid, if not it will clear the input and ignore the rest of the line, then set choice to -1 so it will continue the loop and ask for input again.
         if (choice == 0) break;
         try {
+ 
+        if (choice == 0) break;
             if (choice == 1) {
                 std::string id, name;
                 int battery;
@@ -110,6 +113,7 @@ int main() {
             }
         } catch (const std::runtime_error& e) {
             std::cout << "Error: " << e.what() << "\n";
+            
         }
 
     }while(choice != 0);

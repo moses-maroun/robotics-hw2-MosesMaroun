@@ -34,7 +34,8 @@ int main() {
         }
  
         if (choice == 0) break;
-        if (choice == 1) {
+        try {
+            if (choice == 1) {
                 std::string id, name;
                 int battery;
                 double speed;
@@ -57,7 +58,7 @@ int main() {
             } else if (choice == 3) {
                 std::cout << fleet;
  
-            }else if (choice == 4) {
+            } else if (choice == 4) {
                 std::string id;
                 std::cout << "id to work: ";
                 std::cin >> id;
@@ -107,6 +108,9 @@ int main() {
             } else {
                 std::cout << "Unknown choice.\n";
             }
+        } catch (const std::runtime_error& e) {
+            std::cout << "Error: " << e.what() << "\n";
+        }
 
     }while(choice != 0);
     

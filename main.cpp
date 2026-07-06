@@ -57,6 +57,55 @@ int main() {
             } else if (choice == 3) {
                 std::cout << fleet;
  
+            }else if (choice == 4) {
+                std::string id;
+                std::cout << "id to work: ";
+                std::cin >> id;
+                auto robot = fleet.find(id);
+                robot->work();
+                std::cout << *robot << "\n";
+ 
+            } else if (choice == 5) {
+                fleet.work_all();
+ 
+            } else if (choice == 6) {
+                fleet.charge_all();
+                std::cout << "All robots charged.\n";
+ 
+            } else if (choice == 7) {
+                std::string id, taskName;
+                int priority;
+                std::cout << "robot id, task name, priority(1-5): ";
+                std::cin >> id >> taskName >> priority;
+ 
+                if (priority < 1 || priority > 5)
+                    throw std::runtime_error("priority must be between 1 and 5");
+ 
+                Task t{taskName, priority, id};
+                fleet.assign_task(id, t);
+                std::cout << "Task assigned.\n";
+ 
+            } else if (choice == 8) {
+                fleet.show_tasks();
+ 
+            } else if (choice == 9) {
+                std::string id;
+                int seconds;
+                std::cout << "id, seconds: ";
+                std::cin >> id >> seconds;
+ 
+                if (seconds < 0)
+                    throw std::runtime_error("seconds cannot be negative");
+ 
+                auto robot = fleet.find(id);
+                auto mobile = std::dynamic_pointer_cast<MobileRobot>(robot);
+                if (!mobile)
+                    throw std::runtime_error("robot is not a MobileRobot");
+ 
+                mobile->start_work(seconds);
+ 
+            } else {
+                std::cout << "Unknown choice.\n";
             }
 
     }while(choice != 0);

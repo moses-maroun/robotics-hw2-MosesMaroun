@@ -26,3 +26,29 @@ void Fleet::assign_task(const std::string& robot_id, const Task& t) {
     tasks_.push(assigned);
     robot->work(); // marks robot as busy/working via its own work() call
 }
+
+void Fleet::show_tasks() const {
+    // copy so we don't destroy the real queue while printing
+    auto copy = tasks_;
+    while (!copy.empty()) {
+        std::cout << copy.top() << "\n";
+        copy.pop();
+    }
+}
+ 
+void Fleet::work_all() const {
+    for (const auto& [id, robot] : robots_) {
+        try {
+            robot->work();
+        } catch (const std::runtime_error& e) {
+            std::cout << "Error: " << e.what() << "\n";
+        }
+    }
+}
+ 
+void Fleet::charge_all() const {
+    for (const auto& [id, robot] : robots_) {
+        robot->charge();
+    }
+}
+ 

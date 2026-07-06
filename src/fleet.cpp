@@ -51,6 +51,15 @@ void Fleet::charge_all() const {
         robot->charge();
     }
 }
+
+
+std::size_t Fleet::size() const {
+    return robots_.size();
+}
+ 
+bool Fleet::empty() const {
+    return robots_.empty();
+}
  
 Fleet& Fleet::operator+=(std::shared_ptr<Robot> robot) {
     add(robot);
